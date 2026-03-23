@@ -51,20 +51,20 @@ jobs:
           cache-to: type=gha,mode=max
 
   security:
-    needs: build
-    runs-on: ubuntu-latest
+  needs: build
+  runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Scan application files
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          scan-type: fs
-          scan-ref: .
-          severity: HIGH,CRITICAL
-          exit-code: '1'
-          format: table
+    - name: Scan application files
+      uses: aquasecurity/trivy-action@57a97c7
+      with:
+        scan-type: fs
+        scan-ref: .
+        severity: HIGH,CRITICAL
+        exit-code: '1'
+        format: table
 
   deploy:
     needs: [build, security]
